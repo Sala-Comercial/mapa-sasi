@@ -1,0 +1,9 @@
+{
+  "name": "mapa-sasi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Mapa de municípios e cidades com os negócios do HubSpot, atualizado sozinho",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
