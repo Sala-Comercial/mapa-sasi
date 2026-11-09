@@ -40,6 +40,14 @@ Quanto melhor o campo **Cidade** e **Estado** no HubSpot, mais negócios caem no
 
 A lista do filtro de vendedor está em `config.json`. Os nomes têm que ser iguais aos do HubSpot. Os negócios de outros proprietários continuam no mapa e nos totais.
 
+## Abrir para a rede local
+
+1. Dê dois cliques em **Iniciar_Mapa_Rede.bat**, escolha um usuário e uma senha e deixe a janela aberta.
+2. O servidor mostra o endereço da rede, por exemplo `http://10.63.22.242:8800`. Quem estiver na mesma rede abre esse endereço e digita o usuário e a senha.
+3. Na primeira vez o Windows pergunta sobre o Firewall do Node.js: clique em **Permitir acesso** (marque também a rede pública se a sua rede aparecer como pública).
+
+Observações: o computador que roda o servidor precisa ficar ligado e na rede; o endereço pode mudar quando o computador trocar de rede ou reiniciar; o servidor se recusa a subir na rede sem usuário e senha; dentro da rede interna a senha viaja sem criptografia (HTTP). Para uso fixo, o ideal é rodar num servidor da empresa.
+
 ## Quem pode ver (importante)
 
 O site mostra os negócios de **todos** os vendedores. A regra do PRD diz que o vendedor não pode ver os negócios dos outros. Por isso:

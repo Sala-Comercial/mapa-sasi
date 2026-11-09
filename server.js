@@ -279,8 +279,21 @@ const servidor=http.createServer((req,res)=>{
 setInterval(()=>{for(const r of clientes){try{r.write(': ping\n\n');}catch(e){clientes.delete(r);}}},25000);
 
 carregarInicial();
+const exposto=!['127.0.0.1','localhost','::1'].includes(CFG.host);
+if(exposto&&(!CFG.usuario||!CFG.senha)){
+  console.error('\nPara abrir o mapa para a rede é preciso definir MAPA_USUARIO e MAPA_SENHA (arquivo .env ou o Iniciar_Mapa_Rede.bat).\nO mapa mostra os negócios de todos os vendedores, então não sobe sem senha.\n');
+  process.exit(1);
+}
+function enderecosRede(){
+  const os=require('os'),out=[];
+  for(const lista of Object.values(os.networkInterfaces())) for(const i of lista||[]){
+    if(i.family==='IPv4'&&!i.internal&&/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(i.address)) out.push(i.address);
+  }
+  return out;
+}
 servidor.listen(CFG.porta,CFG.host,()=>{
-  log('Mapa SASI no ar: http://'+(CFG.host==='0.0.0.0'?'localhost':CFG.host)+':'+CFG.porta);
+  log('Mapa SASI no ar: http://localhost:'+CFG.porta);
+  if(exposto) for(const ip of enderecosRede()) log('Na rede local: http://'+ip+':'+CFG.porta+'  (pede usuário e senha)');
   if(CFG.token){log('Ligado ao HubSpot. Atualiza a cada '+CFG.intervalo+' s e faz carga completa a cada '+CFG.completaMin+' min.');ciclo();}
   else log('ATENÇÃO: sem HUBSPOT_TOKEN. Mostrando os dados salvos de 05/11/2026. Veja o LEIA-ME para ligar ao HubSpot.');
 });
